@@ -8,6 +8,7 @@
 
 #import "JscValue.h"
 #import "NSObject+JSC.h"
+#import "NSString+JSC.h"
 
 
 @interface JscValue ()
@@ -21,9 +22,21 @@
 
 @implementation JscValue
 
+#pragma mark - init
+
 + (JscValue *)valueWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context
 {
-    return [[JscValue alloc] initWithJSValue:jsv inContext:context];
+    return [[self alloc] initWithJSValue:jsv inContext:context];
+}
+
++ (JscValue *)valueWithDouble:(double)number inContext:(JSContextRef)context
+{
+    return [[self alloc] initWithDouble:number inContext:context];
+}
+
++ (JscValue *)valueWithString:(NSString *)string inContext:(JSContextRef)context
+{
+    return [[self alloc] initWithString:string inContext:context];
 }
 
 - (JscValue *)initWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context
@@ -38,6 +51,26 @@
     
     return self;
 }
+
+- (JscValue *)initWithDouble:(double)number inContext:(JSContextRef)context
+{
+    JSValueRef jsv = JSValueMakeNumber(context, number);
+    
+    return [self initWithJSValue:jsv inContext:context];
+}
+
+
+- (JscValue *)initWithString:(NSString *)string inContext:(JSContextRef)context
+{
+    JSStringRef jss = [string copyToJSStringValue];
+    JSValueRef jsv = JSValueMakeString(context, jss);
+    JSStringRelease(jss);
+    
+    return [self initWithJSValue:jsv inContext:context];
+}
+
+
+#pragma mark -
 
 + (NSObject *)createWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context
 {
@@ -99,6 +132,7 @@
     return ret;
 }
 
+
 - (JscValue *)callWithArgs:(NSArray *)args
 {
     if (JSValueGetType(self.context, self.jsv) != kJSTypeObject) {
@@ -133,5 +167,14 @@
     return [JscValue valueWithJSValue:ret inContext:self.context];
 }
 
+- (void)setWithPropertyName:(NSString *)propertyName toJSObject:(JSObjectRef)obj
+{
+    JSStringRef jss = [propertyName copyToJSStringValue];
+    JSValueRef e = NULL;
+    JSObjectSetProperty(self.context, obj, jss, self.jsv, kJSPropertyAttributeNone, &e);
+    if (e) {
+        assert("shit");
+    }
+}
 
 @end

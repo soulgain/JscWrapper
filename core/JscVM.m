@@ -9,6 +9,7 @@
 #import "JscVM.h"
 #import "JscHelper.h"
 #import "JscLib.h"
+#import "JscValue.h"
 
 
 @interface JscVM ()
@@ -59,7 +60,7 @@
     return ret;
 }
 
-- (instancetype)objectInGlobalObjectAtIndex:(NSUInteger)index
+- (JscValue *)objectInGlobalObjectAtIndex:(NSUInteger)index
 {
     JSObjectRef globalObject = JSContextGetGlobalObject(self.context);
     JSPropertyNameArrayRef nameArr = JSObjectCopyPropertyNames(self.context, globalObject);
@@ -76,10 +77,41 @@
     }
     
     if (ret) {
-        
+        return [JscValue valueWithJSValue:ret inContext:self.context];
     }
     
     return nil;
+}
+
+- (id)valueForKey:(NSString *)key
+{
+    JSStringRef jss = [key copyToJSStringValue];
+    JSValueRef value = getJSValueFromNamePropertyArray(self.context, jss);
+    JSStringRelease(jss);
+    
+    if (value) {
+        return [JscValue valueWithJSValue:value inContext:self.context];
+    } else {
+        assert("shit!");
+        return nil;
+    }
+}
+
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+    JscValue *_value;
+    
+    if ([value isKindOfClass:[JscValue class]]) {
+        _value = (JscValue *)value;
+    } else if ([value isKindOfClass:[NSString class]]) {
+        _value = [JscValue valueWithString:value inContext:self.context];
+    } else if ([value isKindOfClass:[NSNumber class]]) {
+        _value = [JscValue valueWithDouble:[value doubleValue] inContext:self.context];
+    } else {
+        assert("value class not support!");
+    }
+    
+    [_value setWithPropertyName:key toJSObject:self.globalObject];
 }
 
 

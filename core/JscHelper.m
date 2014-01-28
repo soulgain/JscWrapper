@@ -100,7 +100,6 @@ void dumpJSValue(JSContextRef c, JSValueRef v)
     }
 }
 
-
 void dumpGlobalNamePropertyArray(JSContextRef c)
 {
     JSC_LOG_FUNCTION;
@@ -112,4 +111,9 @@ void dumpGlobalNamePropertyArray(JSContextRef c)
         JSStringRef tmp = JSPropertyNameArrayGetNameAtIndex(pArr, i);
         NSLog(@"%@", (__bridge_transfer NSString *)JSStringCopyCFString(NULL, tmp));
     }
+}
+
+void setPropertyForObject(JSContextRef context, JSObjectRef obj, JSValueRef value, JSStringRef name)
+{
+    
 }
