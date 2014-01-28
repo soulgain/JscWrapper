@@ -59,15 +59,16 @@
     return ret;
 }
 
-- (id)objectInGlobalObjectAtIndex:(NSUInteger)index
+- (instancetype)objectInGlobalObjectAtIndex:(NSUInteger)index
 {
     JSObjectRef globalObject = JSContextGetGlobalObject(self.context);
     JSPropertyNameArrayRef nameArr = JSObjectCopyPropertyNames(self.context, globalObject);
     size_t count = JSPropertyNameArrayGetCount(nameArr);
     
+    JSValueRef ret = NULL;
     if (index < count) {
         JSValueRef e = NULL;
-        JSValueRef ret = JSObjectGetPropertyAtIndex(self.context, globalObject, index, &e);
+        ret = JSObjectGetPropertyAtIndex(self.context, globalObject, index, &e);
         if (e) {
             self.exceptionHandler(self.context, e);
 //            return nil;
@@ -75,20 +76,9 @@
     }
     
     if (ret) {
-         JSValueGetType(self.context, ret);
+        
     }
     
-    return nil;
-}
-
-
--(void)setValue:(id)value forKey:(NSString *)key
-{
-
-}
-
--(instancetype)valueForKey:(NSString *)key
-{
     return nil;
 }
 

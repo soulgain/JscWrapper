@@ -38,6 +38,8 @@
 		F36D3C1118962DD900EF1DDF /* TFHttpWrap.m in Sources */ = {isa = PBXBuildFile; fileRef = F36D3C1018962DD900EF1DDF /* TFHttpWrap.m */; };
 		F36D3C181896479000EF1DDF /* JscLib.m in Sources */ = {isa = PBXBuildFile; fileRef = F36D3C171896479000EF1DDF /* JscLib.m */; };
 		F36D3C1C18964E9500EF1DDF /* hello.js in Resources */ = {isa = PBXBuildFile; fileRef = F36D3C1A18964AAA00EF1DDF /* hello.js */; };
+		F3ED983C18977ED6005A6A2B /* JscValue.m in Sources */ = {isa = PBXBuildFile; fileRef = F3ED983B18977ED6005A6A2B /* JscValue.m */; };
+		F3ED983F189794BE005A6A2B /* NSObject+JSC.m in Sources */ = {isa = PBXBuildFile; fileRef = F3ED983E189794BE005A6A2B /* NSObject+JSC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +109,10 @@
 		F36D3C161896479000EF1DDF /* JscLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JscLib.h; sourceTree = "<group>"; };
 		F36D3C171896479000EF1DDF /* JscLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JscLib.m; sourceTree = "<group>"; };
 		F36D3C1A18964AAA00EF1DDF /* hello.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hello.js; sourceTree = "<group>"; };
+		F3ED983A18977ED6005A6A2B /* JscValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JscValue.h; sourceTree = "<group>"; };
+		F3ED983B18977ED6005A6A2B /* JscValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JscValue.m; sourceTree = "<group>"; };
+		F3ED983D189794BE005A6A2B /* NSObject+JSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSC.h"; sourceTree = "<group>"; };
+		F3ED983E189794BE005A6A2B /* NSObject+JSC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSC.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +235,8 @@
 				F36D3BEF1895FADD00EF1DDF /* JscHelper.h */,
 				F36D3BED1895FAD300EF1DDF /* JscHelper.m */,
 				F36D3C13189630EE00EF1DDF /* JscCommon.h */,
+				F3ED983A18977ED6005A6A2B /* JscValue.h */,
+				F3ED983B18977ED6005A6A2B /* JscValue.m */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -263,6 +271,8 @@
 			children = (
 				F32A63121895163A00AB97E2 /* NSString+JSC.h */,
 				F32A63131895163A00AB97E2 /* NSString+JSC.m */,
+				F3ED983D189794BE005A6A2B /* NSObject+JSC.h */,
+				F3ED983E189794BE005A6A2B /* NSObject+JSC.m */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -411,6 +421,7 @@
 			files = (
 				F36D3C181896479000EF1DDF /* JscLib.m in Sources */,
 				F36D3C0E189616BA00EF1DDF /* TFDomWrap.m in Sources */,
+				F3ED983C18977ED6005A6A2B /* JscValue.m in Sources */,
 				F32A62DD189511E700AB97E2 /* ViewController.m in Sources */,
 				F32A62FF189512A600AB97E2 /* JscVM.m in Sources */,
 				F32A63141895163A00AB97E2 /* NSString+JSC.m in Sources */,
@@ -420,6 +431,7 @@
 				F36D3C1118962DD900EF1DDF /* TFHttpWrap.m in Sources */,
 				F36D3BEE1895FAD300EF1DDF /* JscHelper.m in Sources */,
 				F36D3BFD1896129200EF1DDF /* TFHttp.m in Sources */,
+				F3ED983F189794BE005A6A2B /* NSObject+JSC.m in Sources */,
 				F32A62D3189511E700AB97E2 /* main.m in Sources */,
 				F36D3BFC1896129200EF1DDF /* TFDom.m in Sources */,
 				F36D3C09189612D000EF1DDF /* XPathQuery.m in Sources */,
