@@ -24,6 +24,9 @@
 
 #pragma mark - init
 
+/*
+ static wrapper
+ */
 + (JscValue *)valueWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context
 {
     return [[self alloc] initWithJSValue:jsv inContext:context];
@@ -39,6 +42,9 @@
     return [[self alloc] initWithString:string inContext:context];
 }
 
+/*
+ common initializer
+ */
 - (JscValue *)initWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context
 {
     self = [super init];
@@ -46,7 +52,7 @@
     if (self) {
         self.jsv = jsv;
         self.context = context;
-        self.innerValue = [self.class createWithJSValue:jsv inContext:context];
+//        self.innerValue = [self.class createWithJSValue:jsv inContext:context];
     }
     
     return self;
@@ -70,7 +76,81 @@
 }
 
 
-#pragma mark -
+#pragma mark - public
+
+- (JscValue *)callWithArgs:(NSArray *)args
+{
+    if (JSValueGetType(self.context, self.jsv) != kJSTypeObject) {
+        assert("not a JSObject");
+        return nil;
+    }
+    
+    JSValueRef e = NULL;
+    JSObjectRef obj = JSValueToObject(self.context, self.jsv, &e);
+    if (e) {
+        assert("not a JSObject");
+        return nil;
+    }
+    
+    if (!JSObjectIsFunction(self.context, obj)) {
+        assert("not a function");
+        return nil;
+    }
+    
+    e = NULL;
+    
+    JSValueRef a[10] = {0};
+    for (size_t i = 0; i < [args count]; i++) {
+        a[i] = [args[i] jsvalueInContext:self.context];
+    }
+    
+    JSValueRef ret = JSObjectCallAsFunction(self.context, obj, NULL, [args count], a, &e);
+    if (e) {
+        assert("error in call function!");
+    }
+    
+    return [JscValue valueWithJSValue:ret inContext:self.context];
+}
+
+- (void)setWithPropertyName:(NSString *)propertyName toJSObject:(JSObjectRef)obj
+{
+    JSStringRef jss = [propertyName copyToJSStringValue];
+    JSValueRef e = NULL;
+    JSObjectSetProperty(self.context, obj, jss, self.jsv, kJSPropertyAttributeNone, &e);
+    if (e) {
+        assert("shit");
+    }
+}
+
+- (NSString *)stringValue
+{
+    if (JSValueGetType(self.context, self.jsv) == kJSTypeString) {
+        return [NSString stringWithJSValue:self.jsv inContext:self.context];
+    } else {
+        assert("not a number value");
+        return nil;
+    }
+}
+
+- (NSNumber *)numberValue
+{
+    if (JSValueGetType(self.context, self.jsv) == kJSTypeNumber) {
+        JSValueRef e = NULL;
+        double number = JSValueToNumber(self.context, self.jsv, &e);
+        
+        if (e) {
+            assert("not a number value");
+            return nil;
+        }
+        
+        return [NSNumber numberWithDouble:number];
+    } else {
+        assert("not a number value");
+        return nil;
+    }
+}
+
+#pragma mark - private
 
 + (NSObject *)createWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context
 {
@@ -132,49 +212,5 @@
     return ret;
 }
 
-
-- (JscValue *)callWithArgs:(NSArray *)args
-{
-    if (JSValueGetType(self.context, self.jsv) != kJSTypeObject) {
-        assert("not a JSObject");
-        return nil;
-    }
-    
-    JSValueRef e = NULL;
-    JSObjectRef obj = JSValueToObject(self.context, self.jsv, &e);
-    if (e) {
-        assert("not a JSObject");
-        return nil;
-    }
-    
-    if (!JSObjectIsFunction(self.context, obj)) {
-        assert("not a function");
-        return nil;
-    }
-    
-    e = NULL;
-    
-    JSValueRef a[10] = {0};
-    for (size_t i = 0; i < [args count]; i++) {
-        a[i] = [args[i] jsvalueInContext:self.context];
-    }
-    
-    JSValueRef ret = JSObjectCallAsFunction(self.context, obj, NULL, [args count], a, &e);
-    if (e) {
-        assert("error in call function!");
-    }
-    
-    return [JscValue valueWithJSValue:ret inContext:self.context];
-}
-
-- (void)setWithPropertyName:(NSString *)propertyName toJSObject:(JSObjectRef)obj
-{
-    JSStringRef jss = [propertyName copyToJSStringValue];
-    JSValueRef e = NULL;
-    JSObjectSetProperty(self.context, obj, jss, self.jsv, kJSPropertyAttributeNone, &e);
-    if (e) {
-        assert("shit");
-    }
-}
 
 @end

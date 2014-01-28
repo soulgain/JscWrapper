@@ -24,4 +24,7 @@
 - (JscValue *)callWithArgs:(NSArray *)args;
 - (void)setWithPropertyName:(NSString *)propertyName toJSObject:(JSObjectRef)obj;
 
+- (NSString *)stringValue;
+- (NSNumber *)numberValue;
+
 @end
