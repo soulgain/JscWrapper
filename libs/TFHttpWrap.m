@@ -63,7 +63,11 @@ void init_http(JSContextRef context, JSStringRef name)
     JSObjectRef sendFunctionObj = JSObjectMakeFunctionWithCallback(context, NULL, sendRequestWrap);
     JSObjectRef getStreamFunctionObj = JSObjectMakeFunctionWithCallback(context, NULL, getStreamWrap);
     
-    JSObjectSetProperty(context, httpObj, [@"sendRequest" copyToJSStringValue], sendFunctionObj, 0, NULL);
-    JSObjectSetProperty(context, httpObj, [@"getStream" copyToJSStringValue], getStreamFunctionObj, 0, NULL);
+    JSStringRef propertyName = JSStringCreateWithUTF8CString("sendRequest");
+    JSObjectSetProperty(context, httpObj, propertyName, sendFunctionObj, 0, NULL);
+    JSStringRelease(propertyName);
+    propertyName = JSStringCreateWithUTF8CString("getStream");
+    JSObjectSetProperty(context, httpObj, propertyName, getStreamFunctionObj, 0, NULL);
+    JSStringRelease(propertyName);
     JSObjectSetProperty(context, globalObj, name, httpObj, 0, NULL);
 }

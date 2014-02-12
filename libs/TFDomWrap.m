@@ -50,7 +50,11 @@ void init_dom(JSContextRef context, JSStringRef name)
     JSObjectRef domFunctionObj = JSObjectMakeFunctionWithCallback(context, NULL, selectNodeTextWrap);
     JSObjectRef domFunctionObj2 = JSObjectMakeFunctionWithCallback(context, NULL, selectNodeSetWrap);
     
-    JSObjectSetProperty(context, domObj, [@"selectNodeText" copyToJSStringValue], domFunctionObj, 0, NULL);
-    JSObjectSetProperty(context, domObj, [@"selectNodeSet" copyToJSStringValue], domFunctionObj2, 0, NULL);
+    JSStringRef propertyName = JSStringCreateWithUTF8CString("selectNodeText");
+    JSObjectSetProperty(context, domObj, propertyName, domFunctionObj, 0, NULL);
+    JSStringRelease(propertyName);
+    propertyName = JSStringCreateWithUTF8CString("selectNodeSet");
+    JSObjectSetProperty(context, domObj, propertyName, domFunctionObj2, 0, NULL);
+    JSStringRelease(propertyName);
     JSObjectSetProperty(context, globalObj, name, domObj, 0, NULL);
 }
