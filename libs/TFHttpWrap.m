@@ -9,16 +9,23 @@
 #import "JscLib.h"
 #import "TFHttp2.h"
 #import "NSString+JSC.h"
+#import "JscValue.h"
+#import "NSString+JSC.h"
 
 
 JSValueRef sendRequestWrap(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
 {
+    assert(argumentCount);
     if (argumentCount == 0) {
-        assert("arg error");
         return JSValueMakeUndefined(ctx);
     }
     
-    JSValueRef jsReqString = arguments[0];
+    JSValueRef jso = arguments[0];
+    JscValue *globalObj = [JscValue valueWithJSValue:JSContextGetGlobalObject(ctx) inContext:ctx];
+    JscValue *v = [[globalObj JSValueForPropertyName:@"JSON"] callFunction:@"stringify" withArgs:@[[NSValue valueWithPointer:jso]]];
+    
+    JSValueRef jsReqString = v.jsv;
+    
     NSString *reqString = (__bridge_transfer NSString *)JSStringCopyCFString(NULL, JSValueToStringCopy(ctx, jsReqString, NULL));
     
     NSString *ret = [TFHttp2 sendRequest:reqString];
@@ -29,12 +36,17 @@ JSValueRef sendRequestWrap(JSContextRef ctx, JSObjectRef function, JSObjectRef t
 
 JSValueRef getStreamWrap(JSContextRef ctx, JSObjectRef function, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
 {
+    assert(argumentCount);
     if (argumentCount == 0) {
-        assert("arg error");
         return JSValueMakeUndefined(ctx);
     }
     
-    JSValueRef jsReqString = arguments[0];
+    JSValueRef jso = arguments[0];
+    JscValue *globalObj = [JscValue valueWithJSValue:JSContextGetGlobalObject(ctx) inContext:ctx];
+    JscValue *v = [[globalObj JSValueForPropertyName:@"JSON"] callFunction:@"stringify" withArgs:@[[NSValue valueWithPointer:jso]]];
+    
+    JSValueRef jsReqString = v.jsv;
+    
     NSString *reqString = (__bridge_transfer NSString *)JSStringCopyCFString(NULL, JSValueToStringCopy(ctx, jsReqString, NULL));
     
     NSData *ret = [TFHttp2 getStream:reqString];

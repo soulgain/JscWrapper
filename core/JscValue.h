@@ -12,6 +12,10 @@
 
 @interface JscValue : NSObject
 
+@property (nonatomic, readonly, getter = prototype) JscValue *prototype;
+@property (nonatomic) JSValueRef jsv;
+@property (nonatomic) JSContextRef context;
+
 - (JscValue *)initWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context;
 + (JscValue *)valueWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context;
 
@@ -22,7 +26,13 @@
 + (JscValue *)valueWithString:(NSString *)string inContext:(JSContextRef)context;
 
 - (JscValue *)callWithArgs:(NSArray *)args;
-- (void)setWithPropertyName:(NSString *)propertyName toJSObject:(JSObjectRef)obj;
+- (JscValue *)callAsConstructorWithArgs:(NSArray *)args;
+- (JscValue *)callFunction:(NSString *)functionName withArgs:(NSArray *)args;
+//- (void)setWithPropertyName:(NSString *)propertyName toJSObject:(JSObjectRef)obj;
+//- (void)setWithPropertyName:(NSString *)propertyName toJSObjectPrototype:(JSObjectRef)obj;
+
+- (void)setJSValue:(JscValue *)value forPropertyName:(NSString *)name;
+- (JscValue *)JSValueForPropertyName:(NSString *)name;
 
 - (NSString *)stringValue;
 - (NSNumber *)numberValue;

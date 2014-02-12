@@ -9,7 +9,6 @@
 #import "JscVM.h"
 #import "JscHelper.h"
 #import "JscLib.h"
-#import "JscValue.h"
 
 
 @interface JscVM ()
@@ -35,11 +34,11 @@
 
 - (JSValueRef)evalJSFile:(NSString *)filePath
 {
+    assert(filePath);
     NSError *error = nil;
     NSString *script = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
     if (error) {
         NSLog(@"%@", error);
-        assert("js file error!");
     }
     return [self evalJSString:script];
 }
@@ -83,35 +82,9 @@
     return nil;
 }
 
-- (id)valueForKey:(NSString *)key
+- (JscValue *)globalJSCObject
 {
-    JSStringRef jss = [key copyToJSStringValue];
-    JSValueRef value = getJSValueFromNamePropertyArray(self.context, jss);
-    JSStringRelease(jss);
-    
-    if (value) {
-        return [JscValue valueWithJSValue:value inContext:self.context];
-    } else {
-        assert("shit!");
-        return nil;
-    }
-}
-
-- (void)setValue:(id)value forKey:(NSString *)key
-{
-    JscValue *_value;
-    
-    if ([value isKindOfClass:[JscValue class]]) {
-        _value = (JscValue *)value;
-    } else if ([value isKindOfClass:[NSString class]]) {
-        _value = [JscValue valueWithString:value inContext:self.context];
-    } else if ([value isKindOfClass:[NSNumber class]]) {
-        _value = [JscValue valueWithDouble:[value doubleValue] inContext:self.context];
-    } else {
-        assert("value class not support!");
-    }
-    
-    [_value setWithPropertyName:key toJSObject:self.globalObject];
+    return [JscValue valueWithJSValue:self.globalObject inContext:self.context];
 }
 
 

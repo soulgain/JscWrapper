@@ -22,6 +22,8 @@
         JSStringRef jss = [(NSString *)self copyToJSStringValue];
         ret = JSValueMakeString(context, jss);
         JSStringRelease(jss);
+    } else if ([self isKindOfClass:[NSValue class]]){
+        ret = [(NSValue *)self pointerValue];
     }
     
     return ret;

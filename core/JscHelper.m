@@ -115,5 +115,21 @@ void dumpGlobalNamePropertyArray(JSContextRef c)
 
 void setPropertyForObject(JSContextRef context, JSObjectRef obj, JSValueRef value, JSStringRef name)
 {
+    JSValueRef e = NULL;
+    JSObjectSetProperty(context, obj, name, value, kJSPropertyAttributeNone, &e);
+    assert(!e);
+}
+
+void setPrototypeProptertyForObject(JSContextRef context, JSObjectRef obj, JSValueRef value, JSStringRef name)
+{
+    JSValueRef e = NULL;
+    JSValueRef prototype = JSObjectGetPrototype(context, obj);
+    e = NULL;
+    JSObjectRef o = JSValueToObject(context, prototype, &e);
+    assert(!e);
     
+    JSObjectSetProperty(context, o, name, value, kJSPropertyAttributeNone, &e);
+    assert(!e);
+    
+    JSObjectSetPrototype(context, obj, o);
 }

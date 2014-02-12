@@ -13,6 +13,7 @@
 
 JSValueRef getJSValueFromNamePropertyArray(JSContextRef ctx, JSStringRef name);
 void setPropertyForObject(JSContextRef context, JSObjectRef obj, JSValueRef value, JSStringRef name);
+void setPrototypeProptertyForObject(JSContextRef context, JSObjectRef obj, JSValueRef value, JSStringRef name);
 void dumpJSObject(JSContextRef c, JSObjectRef obj);
 void dumpJSValue(JSContextRef c, JSValueRef v);
 void dumpGlobalNamePropertyArray(JSContextRef c);

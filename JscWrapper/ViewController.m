@@ -27,15 +27,14 @@
     [super viewDidLoad];
     
     self.vm = [[JscVM alloc] init];
-    [self.vm evalJSFile:[[NSBundle mainBundle] pathForResource:@"hello" ofType:@"js"]];
+    [self.vm evalJSFile:[[NSBundle mainBundle] pathForResource:@"train2" ofType:@"js"]];
     UITapGestureRecognizer *tapG = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(getVerifyCode)];
     self.verifyCodeView.userInteractionEnabled = YES;
     [self.verifyCodeView addGestureRecognizer:tapG];
-    
+//    dumpGlobalNamePropertyArray(self.vm.context);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [self getVerifyCode];
     });
-
 }
 
 
@@ -45,7 +44,7 @@
 {
     JSC_LOG_FUNCTION;
     
-    JscValue *loginValue = [self.vm valueForKey:@"getLoginVerificationCode"];
+    JscValue *loginValue = [self.vm.globalJSCObject JSValueForPropertyName:@"getLoginVerificationCode"];
     JscValue *ret = [loginValue callWithArgs:@[]];
     
     NSData *data = [[NSData alloc] initWithBase64Encoding:[ret stringValue]];
@@ -63,8 +62,9 @@
         NSString *passWord = @"asdasd_";
         NSString *verifyCode = self.inputField3.text;
         
-        JscValue *ret = [[self.vm valueForKey:@"login"] callWithArgs:@[userName, passWord, verifyCode]];
+        JscValue *ret = [[self.vm.globalJSCObject JSValueForPropertyName:@"LoginAction"] callAsConstructorWithArgs:@[userName, passWord, verifyCode]];
         
+        ret = [ret callFunction:@"run" withArgs:@[]];
 //        JscValue *r = JSObjectGetProperty(gContext, gGlobalObject, [@"login" copyToJSStringValue], NULL);
         
         if (ret) {
