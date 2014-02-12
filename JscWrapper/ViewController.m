@@ -72,30 +72,6 @@
             NSDictionary *d = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"%@", d);
         }
-        
-//        if (JSValueIsObject(gContext, r)) {
-//            JSObjectRef funcObj = JSValueToObject(gContext, r, NULL);
-//            
-//            JSValueRef v1 = JSValueMakeString(gContext, [userName copyToJSStringValue]);
-//            JSValueRef v2 = JSValueMakeString(gContext, [passWord copyToJSStringValue]);
-//            JSValueRef v3 = JSValueMakeString(gContext, [verifyCode copyToJSStringValue]);
-//            
-//            if (JSObjectIsFunction(gContext, funcObj)) {
-//                JSValueRef argList[] = {v1, v2, v3};
-//                JSValueRef e = NULL;
-//                JSValueRef ret = JSObjectCallAsFunction(gContext, funcObj, NULL, 3, argList, &e);
-//                
-//                if (e) {
-//                    dumpJSValue(gContext, e);
-//                    assert("e");
-//                } else {
-//                    //                dumpJSValue(gContext, ret);
-//                    NSString *jsonString = [NSString stringWithJSValue:ret inContext:self.vm.context];
-//                    NSDictionary *d = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
-//                    NSLog(@"%@", d);
-//                }
-//            }
-//        }
     };
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), b);

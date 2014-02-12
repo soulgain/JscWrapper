@@ -18,7 +18,6 @@
 @interface JscVM : NSObject
 
 @property (nonatomic) JSGlobalContextRef context;
-@property (nonatomic) JSObjectRef globalObject;
 @property (nonatomic, readonly) JscValue *globalJSCObject;
 @property (nonatomic, strong) void(^exceptionHandler)(JSContextRef context, JSValueRef e);
 

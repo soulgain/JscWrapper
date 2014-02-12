@@ -13,6 +13,8 @@
 
 @interface JscVM ()
 
+@property (nonatomic) JSObjectRef globalObject;
+
 @end
 
 
@@ -21,6 +23,7 @@
 - (instancetype)init
 {
     self = [super init];
+    
     self.context = JSGlobalContextCreate(NULL);
     self.globalObject = JSContextGetGlobalObject(self.context);
     self.exceptionHandler = ^void(JSContextRef c, JSValueRef e){
