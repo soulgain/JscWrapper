@@ -48,7 +48,8 @@
     
     if (self) {
         self.jsv = jsv;
-        self.context = context;   }
+        self.context = context;
+    }
     
     return self;
 }
