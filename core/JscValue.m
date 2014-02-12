@@ -266,5 +266,22 @@
     }
 }
 
+- (JSValueRef)JSValue
+{
+    return self.jsv;
+}
+
+- (JSObjectRef)JSObject
+{
+    JSValueRef e = NULL;
+    JSObjectRef ret = JSValueToObject(self.context, self.jsv, &e);
+    assert(!e);
+    if (!e) {
+        return ret;
+    }
+    
+    return NULL;
+}
+
 
 @end

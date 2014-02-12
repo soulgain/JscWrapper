@@ -36,5 +36,7 @@
 
 - (NSString *)stringValue;
 - (NSNumber *)numberValue;
+- (JSValueRef)JSValue;
+- (JSObjectRef)JSObject;
 
 @end
