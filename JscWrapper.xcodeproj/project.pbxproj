@@ -27,7 +27,7 @@
 		F32A6310189512E200AB97E2 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F32A630F189512E200AB97E2 /* libicucore.dylib */; };
 		F32A63141895163A00AB97E2 /* NSString+JSC.m in Sources */ = {isa = PBXBuildFile; fileRef = F32A63131895163A00AB97E2 /* NSString+JSC.m */; };
 		F33B971618AA07CB0078F14D /* train2.js in Resources */ = {isa = PBXBuildFile; fileRef = F33B971418AA01110078F14D /* train2.js */; };
-		F33B971718AA07CB0078F14D /* hello.js in Resources */ = {isa = PBXBuildFile; fileRef = F36D3C1A18964AAA00EF1DDF /* hello.js */; };
+		F33B971A18AB73740078F14D /* TFConsoleWrap.m in Sources */ = {isa = PBXBuildFile; fileRef = F33B971918AB73740078F14D /* TFConsoleWrap.m */; };
 		F36D3BEE1895FAD300EF1DDF /* JscHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F36D3BED1895FAD300EF1DDF /* JscHelper.m */; };
 		F36D3BFC1896129200EF1DDF /* TFDom.m in Sources */ = {isa = PBXBuildFile; fileRef = F36D3BF71896129200EF1DDF /* TFDom.m */; };
 		F36D3BFD1896129200EF1DDF /* TFHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F36D3BF91896129200EF1DDF /* TFHttp.m */; };
@@ -90,6 +90,7 @@
 		F32A63121895163A00AB97E2 /* NSString+JSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSC.h"; sourceTree = "<group>"; };
 		F32A63131895163A00AB97E2 /* NSString+JSC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JSC.m"; sourceTree = "<group>"; };
 		F33B971418AA01110078F14D /* train2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = train2.js; sourceTree = "<group>"; };
+		F33B971918AB73740078F14D /* TFConsoleWrap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFConsoleWrap.m; sourceTree = "<group>"; };
 		F36D3BED1895FAD300EF1DDF /* JscHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JscHelper.m; sourceTree = "<group>"; };
 		F36D3BEF1895FADD00EF1DDF /* JscHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JscHelper.h; sourceTree = "<group>"; };
 		F36D3BF61896129200EF1DDF /* TFDom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFDom.h; sourceTree = "<group>"; };
@@ -110,7 +111,6 @@
 		F36D3C13189630EE00EF1DDF /* JscCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JscCommon.h; sourceTree = "<group>"; };
 		F36D3C161896479000EF1DDF /* JscLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JscLib.h; sourceTree = "<group>"; };
 		F36D3C171896479000EF1DDF /* JscLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JscLib.m; sourceTree = "<group>"; };
-		F36D3C1A18964AAA00EF1DDF /* hello.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hello.js; sourceTree = "<group>"; };
 		F3ED983A18977ED6005A6A2B /* JscValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JscValue.h; sourceTree = "<group>"; };
 		F3ED983B18977ED6005A6A2B /* JscValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JscValue.m; sourceTree = "<group>"; };
 		F3ED983D189794BE005A6A2B /* NSObject+JSC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSC.h"; sourceTree = "<group>"; };
@@ -290,6 +290,7 @@
 				F36D3BFB1896129200EF1DDF /* TFHttp2.m */,
 				F36D3C0D189616BA00EF1DDF /* TFDomWrap.m */,
 				F36D3C1018962DD900EF1DDF /* TFHttpWrap.m */,
+				F33B971918AB73740078F14D /* TFConsoleWrap.m */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -319,7 +320,6 @@
 			isa = PBXGroup;
 			children = (
 				F33B971418AA01110078F14D /* train2.js */,
-				F36D3C1A18964AAA00EF1DDF /* hello.js */,
 			);
 			path = js;
 			sourceTree = "<group>";
@@ -401,7 +401,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F33B971618AA07CB0078F14D /* train2.js in Resources */,
-				F33B971718AA07CB0078F14D /* hello.js in Resources */,
 				F32A62DF189511E700AB97E2 /* Images.xcassets in Resources */,
 				F32A62D1189511E700AB97E2 /* InfoPlist.strings in Resources */,
 				F32A62DA189511E700AB97E2 /* Main.storyboard in Resources */,
@@ -436,6 +435,7 @@
 				F36D3BEE1895FAD300EF1DDF /* JscHelper.m in Sources */,
 				F36D3BFD1896129200EF1DDF /* TFHttp.m in Sources */,
 				F3ED983F189794BE005A6A2B /* NSObject+JSC.m in Sources */,
+				F33B971A18AB73740078F14D /* TFConsoleWrap.m in Sources */,
 				F32A62D3189511E700AB97E2 /* main.m in Sources */,
 				F36D3BFC1896129200EF1DDF /* TFDom.m in Sources */,
 				F36D3C09189612D000EF1DDF /* XPathQuery.m in Sources */,

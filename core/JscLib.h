@@ -15,6 +15,9 @@ void init_dom(JSContextRef context, JSStringRef name);
 #define JSC_HTTPLIB "http"
 void init_http(JSContextRef context, JSStringRef name);
 
+#define JSC_CONSOLE "console"
+void init_console(JSContextRef context, JSStringRef name);
+
 
 typedef void (*init_function)(JSContextRef context, JSStringRef name);
 
@@ -27,6 +30,7 @@ typedef struct {
 static const JscLib_Reg Jsc_libs[] = {
     {JSC_DOMLIB, init_dom},
     {JSC_HTTPLIB, init_http},
+    {JSC_CONSOLE, init_console},
     {NULL, NULL}
 };
 

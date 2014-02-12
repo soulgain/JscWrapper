@@ -262,6 +262,6 @@ function queryTickets(from, to, date) {
 
 function log(message) {
     if (DEBUG) {
-        // console.log(message);
+        console.log(message);
     }
 }
