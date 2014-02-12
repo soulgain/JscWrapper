@@ -13,8 +13,6 @@
 
 @interface JscVM ()
 
-@property (nonatomic) JSObjectRef globalObject;
-
 @end
 
 
@@ -25,7 +23,6 @@
     self = [super init];
     
     self.context = JSGlobalContextCreate(NULL);
-    self.globalObject = JSContextGetGlobalObject(self.context);
     self.exceptionHandler = ^void(JSContextRef c, JSValueRef e){
         dumpJSValue(c, e);
     };
@@ -57,7 +54,6 @@
     if (exception && self.exceptionHandler) {
         self.exceptionHandler(self.context, exception);
     }
-//    dumpJSValue(self.context, ret);
     
     return ret;
 }
@@ -74,7 +70,6 @@
         ret = JSObjectGetPropertyAtIndex(self.context, globalObject, index, &e);
         if (e) {
             self.exceptionHandler(self.context, e);
-//            return nil;
         }
     }
     
@@ -87,11 +82,7 @@
 
 - (JscValue *)globalJSCObject
 {
-    return [JscValue valueWithJSValue:self.globalObject inContext:self.context];
+    return [JscValue valueWithJSValue:JSContextGetGlobalObject(self.context) inContext:self.context];
 }
-
-
-#pragma mark -
-
 
 @end
