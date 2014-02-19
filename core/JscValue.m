@@ -39,6 +39,11 @@
     return [[self alloc] initWithString:string inContext:context];
 }
 
++ (JscValue *)valueWithBool:(BOOL)b inContext:(JSContextRef)context
+{
+    return [[self alloc] initWithBool:b inContext:context];
+}
+
 /*
  common initializer
  */
@@ -71,6 +76,12 @@
     return [self initWithJSValue:jsv inContext:context];
 }
 
+- (JscValue *)initWithBool:(BOOL)b inContext:(JSContextRef)context
+{
+    JSValueRef jsv = JSValueMakeBoolean(context, b);
+    
+    return [self initWithJSValue:jsv inContext:context];
+}
 
 #pragma mark - public
 

@@ -19,6 +19,9 @@
 - (JscValue *)initWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context;
 + (JscValue *)valueWithJSValue:(JSValueRef)jsv inContext:(JSContextRef)context;
 
+- (JscValue *)initWithBool:(BOOL)b inContext:(JSContextRef)context;
++ (JscValue *)valueWithBool:(BOOL)b inContext:(JSContextRef)context;
+
 - (JscValue *)initWithDouble:(double)number inContext:(JSContextRef)context;
 + (JscValue *)valueWithDouble:(double)number inContext:(JSContextRef)context;
 
