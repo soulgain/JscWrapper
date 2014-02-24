@@ -278,6 +278,25 @@
     }
 }
 
+- (NSNumber *)boolValue
+{
+    if (JSValueGetType(self.context, self.jsv) == kJSTypeBoolean) {
+        JSValueRef e = NULL;
+        BOOL b = JSValueToBoolean(self.context, self.jsv);
+        
+        assert(!e);
+        if (e) {
+            
+            return nil;
+        }
+        
+        return [NSNumber numberWithBool:b];
+    } else {
+        assert(0);
+        return nil;
+    }
+}
+
 - (JSValueRef)JSValue
 {
     return self.jsv;
